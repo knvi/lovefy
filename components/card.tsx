@@ -1,8 +1,12 @@
+"use client"
+
 import { CardProps } from "@/types/card";
 import { PanInfo, motion, useMotionValue, useTransform } from "framer-motion";
+import { Music } from "lucide-react";
+import Image from "next/image";
 import { useState } from "react";
 
-const Card: React.FC<CardProps> = ({ card, active, remove }) => {
+const Card: React.FC<CardProps> = ({ active, remove, track }) => {
     const x = useMotionValue(0);
     const [leaveX, setLeaveX] = useState(0);
     const xInput = [-200, 0, 200];
@@ -23,10 +27,10 @@ const Card: React.FC<CardProps> = ({ card, active, remove }) => {
     const onDragEnd = (_e: any, info: PanInfo) => {
         if (info.offset.x > 200) {
             setLeaveX(1000);
-            remove(card, "yay");
+            remove(track, "yay");
         } else if (info.offset.x < -200) {
             setLeaveX(-1000);
-            remove(card, "nay");
+            remove(track, "nay");
         }
     };
 
@@ -51,9 +55,10 @@ const Card: React.FC<CardProps> = ({ card, active, remove }) => {
                 }}
                 className="absolute h-[430px] w-[300px] bg-white shadow-xl rounded-2xl flex flex-col justify-center items-center cursor-grab"
             >
-                <p className="text-5xl font-bold break-words" style={{ color: card.color }}>
-                    {card.name}
-                </p>
+                <h3 className="mt-5 font-bold truncate">{track.name}</h3>
+                <h6 className="mt-1 text-xs font-semibold truncate text-gray">
+                    {track.artists[0].name}
+                </h6>
             </motion.div>
         </>
     );
