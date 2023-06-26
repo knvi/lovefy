@@ -11,3 +11,11 @@ export const getRecommendedTracks = async (session: AuthSession): Promise<Track[
 
     return data.tracks;
 }
+
+export const getGenres = async (session: AuthSession): Promise<string[]> => {
+    let endpoint = `https://api.spotify.com/v1/recommendations/available-genre-seeds`;
+
+    const data = await get(endpoint, session);
+
+    return data.genres;
+}

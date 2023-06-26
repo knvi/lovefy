@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { SwipeType } from "@/types/card";
 import { Track } from "@/types/spotify";
 import { AnimatePresence } from "framer-motion";
-import { getRecommendedTracks } from "@/lib/spotify/getrecommended";
+import { getRecommendedTracks } from "@/lib/spotify/actions";
 import { AuthSession } from "@/types/auth";
 
 type Props = {
@@ -28,8 +28,10 @@ export default function CardHolder({ session }: Props) {
   };
 
   useEffect(() => {
-    getCards();
-  }, []);
+    if (cards.length === 0) {
+      getCards();
+    }
+  }, [cards]);
 
   if (isLoading) {
     return (
